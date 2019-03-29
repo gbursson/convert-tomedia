@@ -1,25 +1,27 @@
 ﻿<#
 .Synopsis
-   Convert file to mp3 using ffmpeg
+   Convert media file using ffmpeg
 .DESCRIPTION
-   Convert file to mp3 using ffmpeg
+   Convert media file to another format using ffmpeg (default output is mp3)
 .EXAMPLE
-   Convert-ToMp3 extension filename
+   ConvertTo-Media extension filename
 #>
-function ConvertTo-MP3 {
+function ConvertTo-Media {
     Param
     (
         # Filename to convert
         [Parameter(Mandatory = $true,
             ValueFromPipelineByPropertyName = $true,
             Position = 0)]
-        $Filetype,
-        [Parameter(Mandatory = $true,
+        $Filename,
+        [Parameter(Mandatory = $false,
             ValueFromPipelineByPropertyName = $true,
             Position = 1)]
-        $Filename
-
+        $Filetype
     )
+    if (-Not $Filetype) {
+        $Filetype = "mp3"        
+    }
 
     $NewFilename = [System.IO.Path]::GetFileNameWithoutExtension($Filename) + "." + ($Filetype)
     $Command = {ffmpeg -i ($Filename) ($NewFilename)}
