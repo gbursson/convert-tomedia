@@ -19,9 +19,8 @@ function ConvertTo-Media {
             Position = 1)]
         $Filetype
     )
-    if (-Not $Filetype) {
-        $Filetype = "mp3"        
-    }
+    $Filetype = $Filetype || "mp3"
+    
 
     $NewFilename = [System.IO.Path]::GetFileNameWithoutExtension($Filename) + "." + ($Filetype)
     $Command = {ffmpeg -i ($Filename) ($NewFilename)}
