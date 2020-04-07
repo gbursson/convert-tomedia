@@ -25,6 +25,8 @@ function ConvertTo-Media {
         $Filetype = "mp3"        
     }
 
+    $Filetype = $Filetype.ToLower()
+
     $NewFilename = [System.IO.Path]::GetFileNameWithoutExtension($Filename) + "." + ($Filetype)
     
     $Command = {ffmpeg -i ($Filename) ($NewFilename)}
